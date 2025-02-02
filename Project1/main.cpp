@@ -3,6 +3,8 @@
 
 #include "Memory.h"
 #include "CPU.h"
+#include <fstream>
+#include <vector>
 
 Memory* memory;
 CPU* cpu;
@@ -61,7 +63,7 @@ int main()
 	memory->WriteByte(0x0019, 0x0A);
 	memory->WriteByte(0x001A, 0x00);*/
 
-	memory->WriteByte(0x0000, INS_JMP_IND);
+	/*memory->WriteByte(0x0000, INS_JMP_IND);
 	memory->WriteByte(0x0001, 0x05);
 	memory->WriteByte(0x0002, 0x01);
 
@@ -69,7 +71,17 @@ int main()
 	memory->WriteByte(0x0106, 0x05);
 
 	memory->WriteByte(0x05A9, INS_LDA_IM);
-	memory->WriteByte(0x05AA, 0x05);
+	memory->WriteByte(0x05AA, 0x05);*/
+
+	std::ifstream stream;
+	//stream.open("lda-sta-loop-example.bin", std::ios_base::binary);
+	stream.open("bins/loop+1.bin", std::ios_base::binary);
+	if (!stream.bad()) {
+		std::vector<byte> data((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+
+		memory->WriteBytes(0x0000, data.data(), data.size()-1);
+		//printf("Loading file %s", stream.)
+	}
 
 	cpu->Execute();
 

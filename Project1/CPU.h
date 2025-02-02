@@ -31,6 +31,7 @@ public:
 
 	word AddressImplied();
 	word AddressImmediate();
+	word AddressRelative();
 
 	word AddressAbsoluteIndirect();
 
@@ -60,7 +61,28 @@ public:
 	byte INS_PLA(word addr);
 	byte INS_PHP(word addr);
 	byte INS_PLP(word addr);
+
 	byte INS_JMP(word addr);
+	byte INS_JSR(word addr);
+	byte INS_RTS(word addr);
+
+	byte INS_AND(word addr);
+	byte INS_ORA(word addr);
+	byte INS_EOR(word addr);
+
+	byte INS_CMP(word addr);
+	byte INS_BNE(word addr);
+
+
+	byte INS_CLC(word addr);
+	byte INS_SEC(word addr);
+	byte INS_CLD(word addr);
+	byte INS_SED(word addr);
+	byte INS_CLI(word addr);
+	byte INS_SEI(word addr);
+	byte INS_CLV(word addr);
+
+	byte INS_ADC(word addr);
 
 	enum class StatusFlag : byte {
 		CARRY = (1 << 0),		// Carry Bit

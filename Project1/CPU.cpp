@@ -50,8 +50,74 @@ CPU* CPU::Initialize(Memory* memory)
 	out->instructionTable[INS_STY_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_STY, 3 };
 	out->instructionTable[INS_STY_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_STY, 4 };
 
-	out->instructionTable[INS_JMP_ABS] = { &CPU::AddressAbsolute,		  &CPU::INS_JMP, 3 };
-	out->instructionTable[INS_JMP_IND] = { &CPU::AddressAbsoluteIndirect, &CPU::INS_JMP, 5 };
+
+	out->instructionTable[INS_TSX_IM]  = { &CPU::AddressImplied, &CPU::INS_TSX, 2 };
+	out->instructionTable[INS_TXS_IM]  = { &CPU::AddressImplied, &CPU::INS_TXS, 2 };
+	out->instructionTable[INS_PHA_IM]  = { &CPU::AddressImplied, &CPU::INS_PHA, 3 };
+	out->instructionTable[INS_PLA_IM]  = { &CPU::AddressImplied, &CPU::INS_PLA, 4 };
+	out->instructionTable[INS_PHP_IM]  = { &CPU::AddressImplied, &CPU::INS_PHP, 3 };
+	out->instructionTable[INS_PLP_IM]  = { &CPU::AddressImplied, &CPU::INS_PLP, 4 };
+
+	out->instructionTable[INS_JMP_ABS]  = { &CPU::AddressAbsolute,		   &CPU::INS_JMP, 3 };
+	out->instructionTable[INS_JMP_IND]  = { &CPU::AddressAbsoluteIndirect, &CPU::INS_JMP, 5 };
+
+	out->instructionTable[INS_JSR_ABS]  = { &CPU::AddressAbsolute, &CPU::INS_JSR, 6 };
+	out->instructionTable[INS_RTS_IM]   = { &CPU::AddressImplied,  &CPU::INS_RTS, 6 };
+
+	out->instructionTable[INS_AND_IM]   = { &CPU::AddressImmediate, &CPU::INS_AND, 3 };
+	out->instructionTable[INS_AND_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_AND, 3 };
+	out->instructionTable[INS_AND_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_AND, 4 };
+	out->instructionTable[INS_AND_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_AND, 4 };
+	out->instructionTable[INS_AND_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_AND, 4 };
+	out->instructionTable[INS_AND_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_AND, 4 };
+	out->instructionTable[INS_AND_INDX] = { &CPU::AddressIndirectX, &CPU::INS_AND, 6 };
+	out->instructionTable[INS_AND_INDY] = { &CPU::AddressIndirectY, &CPU::INS_AND, 5 };
+
+	out->instructionTable[INS_ORA_IM]   = { &CPU::AddressImmediate, &CPU::INS_ORA, 2 };
+	out->instructionTable[INS_ORA_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ORA, 3 };
+	out->instructionTable[INS_ORA_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_ORA, 4 };
+	out->instructionTable[INS_ORA_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_ORA, 4 };
+	out->instructionTable[INS_ORA_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_ORA, 4 };
+	out->instructionTable[INS_ORA_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_ORA, 4 };
+	out->instructionTable[INS_ORA_INDX] = { &CPU::AddressIndirectX, &CPU::INS_ORA, 6 };
+	out->instructionTable[INS_ORA_INDY] = { &CPU::AddressIndirectY, &CPU::INS_ORA, 5 };
+
+	out->instructionTable[INS_EOR_IM]   = { &CPU::AddressImmediate, &CPU::INS_EOR, 2 };
+	out->instructionTable[INS_EOR_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_EOR, 3 };
+	out->instructionTable[INS_EOR_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_EOR, 4 };
+	out->instructionTable[INS_EOR_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_EOR, 4 };
+	out->instructionTable[INS_EOR_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_EOR, 4 };
+	out->instructionTable[INS_EOR_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_EOR, 4 };
+	out->instructionTable[INS_EOR_INDX] = { &CPU::AddressIndirectX, &CPU::INS_EOR, 6 };
+	out->instructionTable[INS_EOR_INDY] = { &CPU::AddressIndirectY, &CPU::INS_EOR, 5 };
+
+	out->instructionTable[INS_BNE_REL]  = { &CPU::AddressRelative, &CPU::INS_BNE, 2 };
+
+	out->instructionTable[INS_CLC_IM] = { &CPU::AddressImplied, &CPU::INS_CLC, 2 };
+	out->instructionTable[INS_SEC_IM] = { &CPU::AddressImplied, &CPU::INS_SEC, 2 };
+	out->instructionTable[INS_CLD_IM] = { &CPU::AddressImplied, &CPU::INS_CLD, 2 };
+	out->instructionTable[INS_SED_IM] = { &CPU::AddressImplied, &CPU::INS_SED, 2 };
+	out->instructionTable[INS_CLI_IM] = { &CPU::AddressImplied, &CPU::INS_CLI, 2 };
+	out->instructionTable[INS_SEI_IM] = { &CPU::AddressImplied, &CPU::INS_SEI, 2 };
+	out->instructionTable[INS_CLV_IM] = { &CPU::AddressImplied, &CPU::INS_CLV, 2 };
+
+	out->instructionTable[INS_ADC_IM]   = { &CPU::AddressImmediate, &CPU::INS_ADC, 2 };
+	out->instructionTable[INS_ADC_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ADC, 3 };
+	out->instructionTable[INS_ADC_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_ADC, 4 };
+	out->instructionTable[INS_ADC_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_ADC, 4 };
+	out->instructionTable[INS_ADC_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_ADC, 4 };
+	out->instructionTable[INS_ADC_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_ADC, 4 };
+	out->instructionTable[INS_ADC_INDX] = { &CPU::AddressIndirectX, &CPU::INS_ADC, 6 };
+	out->instructionTable[INS_ADC_INDY] = { &CPU::AddressIndirectY, &CPU::INS_ADC, 5 };
+
+	out->instructionTable[INS_CMP_IM]   = { &CPU::AddressImmediate, &CPU::INS_CMP, 2 };
+	out->instructionTable[INS_CMP_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_CMP, 3 };
+	out->instructionTable[INS_CMP_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_CMP, 4 };
+	out->instructionTable[INS_CMP_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_CMP, 4 };
+	out->instructionTable[INS_CMP_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_CMP, 4 };
+	out->instructionTable[INS_CMP_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_CMP, 4 };
+	out->instructionTable[INS_CMP_INDX] = { &CPU::AddressIndirectX, &CPU::INS_CMP, 6 };
+	out->instructionTable[INS_CMP_INDY] = { &CPU::AddressIndirectY, &CPU::INS_CMP, 5 };
 
 	return out;
 }
@@ -174,6 +240,19 @@ word CPU::AddressImmediate()
 	return PC++;
 }
 
+word CPU::AddressRelative()
+{
+	uint16_t offset;
+	uint16_t addr;
+
+	offset = ReadByte(PC++);
+	if (offset & 0x80) offset |= 0xFF00;
+	addr = PC + (int16_t)offset;
+	return addr;
+
+	return word();
+}
+
 word CPU::AddressAbsoluteIndirect()
 {
 	word effL;
@@ -276,7 +355,7 @@ void CPU::Execute()
 
 		if (!stat)
 		{
-			printf("Exiting loop because of instruction 0x%x\n", ins);
+			printf("Exiting loop because of instruction 0x%x, PC 0x%x\n", ins, PC);
 			return;
 		}
 	}
@@ -395,6 +474,154 @@ byte CPU::INS_PLP(word addr)
 byte CPU::INS_JMP(word addr)
 {
 	PC = addr;
+
+	return 1;
+}
+
+byte CPU::INS_JSR(word addr)
+{
+	PushPCMinusOneToStack();
+	PC = addr;
+	return 1;
+}
+
+byte CPU::INS_RTS(word addr)
+{
+	word ReturnAddress = PopWordFromStack();
+	PC = ReturnAddress + 1;
+	return 1;
+}
+
+byte CPU::INS_AND(word addr)
+{
+	byte v = ReadByte(addr);
+	A = v & A;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(A));
+
+	return 1;
+}
+
+byte CPU::INS_ORA(word addr)
+{
+	byte v = ReadByte(addr);
+	A = v | A;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(A));
+	
+	return 1;
+}
+
+byte CPU::INS_EOR(word addr)
+{
+	byte v = ReadByte(addr);
+	A = v ^ A;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(A));
+
+	return 1;
+}
+
+byte CPU::INS_CMP(word addr)
+{
+	byte v = ReadByte(addr);
+	word tmp = A - v;
+
+	SetStatusFlag(StatusFlag::CARRY, !(A < v));
+	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+
+	return 1;
+}
+
+byte CPU::INS_BNE(word addr)
+{
+	if (GetStatusFlag(StatusFlag::ZERO))
+	{
+		PC = addr;
+	}
+	
+	return 1;
+}
+
+byte CPU::INS_CLC(word addr)
+{
+	SetStatusFlag(StatusFlag::CARRY, 0);
+
+	return 1;
+}
+
+byte CPU::INS_SEC(word addr)
+{
+	SetStatusFlag(StatusFlag::CARRY, 1);
+
+	return 1;
+}
+
+byte CPU::INS_CLD(word addr)
+{
+	SetStatusFlag(StatusFlag::DECIMAL, 0);
+
+	return 1;
+}
+
+byte CPU::INS_SED(word addr)
+{
+	SetStatusFlag(StatusFlag::DECIMAL, 1);
+
+	return 1;
+}
+
+byte CPU::INS_CLI(word addr)
+{
+	SetStatusFlag(StatusFlag::INTERRUPT, 0);
+
+	return 1;
+}
+
+byte CPU::INS_SEI(word addr)
+{
+	SetStatusFlag(StatusFlag::INTERRUPT, 1);
+
+	return 1;
+}
+
+byte CPU::INS_CLV(word addr)
+{
+	SetStatusFlag(StatusFlag::INT_OVERFLOW, 0);
+
+	return 1;
+}
+
+byte CPU::INS_ADC(word addr)
+{
+	byte v = ReadByte(addr);
+	word tmp = A + v + GetStatusFlag(StatusFlag::CARRY);
+
+	if (GetStatusFlag(StatusFlag::DECIMAL))
+	{
+		if (((A & 0xF) + (v & 0xF) + GetStatusFlag(StatusFlag::CARRY)) > 9) tmp += 6;
+		SetStatusFlag(StatusFlag::NEGATIVE, tmp & 0x80);
+		SetStatusFlag(StatusFlag::INT_OVERFLOW, !((A ^ v) & 0x80) && ((A ^ tmp) & 0x80));
+		if (tmp > 0x99)
+		{
+			tmp += 96;
+		}
+		SetStatusFlag(StatusFlag::CARRY, tmp > 0x99);
+	}
+	else
+	{
+		SetStatusFlag(StatusFlag::NEGATIVE, tmp & 0x80);
+		SetStatusFlag(StatusFlag::INT_OVERFLOW, !((A ^ v) & 0x80) && ((A ^ tmp) & 0x80));
+		SetStatusFlag(StatusFlag::CARRY, tmp > 0xFF);
+	}
+
+	A = tmp & 0xFF;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
 
 	return 1;
 }

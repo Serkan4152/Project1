@@ -40,17 +40,17 @@ INS_STY_ZP = 0x84,
 INS_STY_ZPX = 0x94,
 INS_STY_ABS = 0x8C,
 
-INS_TSX = 0xBA,
-INS_TXS = 0x9A,
-INS_PHA = 0x48,
-INS_PLA = 0x68,
-INS_PHP = 0x08,
-INS_PLP = 0x28,
+INS_TSX_IM = 0xBA,
+INS_TXS_IM = 0x9A,
+INS_PHA_IM = 0x48,
+INS_PLA_IM = 0x68,
+INS_PHP_IM = 0x08,
+INS_PLP_IM = 0x28,
 
 INS_JMP_ABS = 0x4C,
 INS_JMP_IND = 0x6C,
-INS_JSR = 0x20,
-INS_RTS = 0x60,
+INS_JSR_ABS = 0x20,
+INS_RTS_IM = 0x60,
 
 //Logical Ops
 
@@ -110,7 +110,7 @@ INS_INC_ABSX = 0xFE,
 
 //branches
 INS_BEQ = 0xF0,
-INS_BNE = 0xD0,
+INS_BNE_REL = 0xD0,
 INS_BCS = 0xB0,
 INS_BCC = 0x90,
 INS_BMI = 0x30,
@@ -119,16 +119,16 @@ INS_BVC = 0x50,
 INS_BVS = 0x70,
 
 //status flag changes
-INS_CLC = 0x18,
-INS_SEC = 0x38,
-INS_CLD = 0xD8,
-INS_SED = 0xF8,
-INS_CLI = 0x58,
-INS_SEI = 0x78,
-INS_CLV = 0xB8,
+INS_CLC_IM = 0x18,
+INS_SEC_IM = 0x38,
+INS_CLD_IM = 0xD8,
+INS_SED_IM = 0xF8,
+INS_CLI_IM = 0x58,
+INS_SEI_IM = 0x78,
+INS_CLV_IM = 0xB8,
 
 //Arithmetic
-INS_ADC = 0x69,
+INS_ADC_IM = 0x69,
 INS_ADC_ZP = 0x65,
 INS_ADC_ZPX = 0x75,
 INS_ADC_ABS = 0x6D,
@@ -147,7 +147,7 @@ INS_SBC_INDX = 0xE1,
 INS_SBC_INDY = 0xF1,
 
 // Register Comparison
-INS_CMP = 0xC9,
+INS_CMP_IM = 0xC9,
 INS_CMP_ZP = 0xC5,
 INS_CMP_ZPX = 0xD5,
 INS_CMP_ABS = 0xCD,
