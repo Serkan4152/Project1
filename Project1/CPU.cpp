@@ -50,19 +50,17 @@ CPU* CPU::Initialize(Memory* memory)
 	out->instructionTable[INS_STY_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_STY, 3 };
 	out->instructionTable[INS_STY_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_STY, 4 };
 
-
-	out->instructionTable[INS_TSX_IM]  = { &CPU::AddressImplied, &CPU::INS_TSX, 2 };
-	out->instructionTable[INS_TXS_IM]  = { &CPU::AddressImplied, &CPU::INS_TXS, 2 };
-	out->instructionTable[INS_PHA_IM]  = { &CPU::AddressImplied, &CPU::INS_PHA, 3 };
-	out->instructionTable[INS_PLA_IM]  = { &CPU::AddressImplied, &CPU::INS_PLA, 4 };
-	out->instructionTable[INS_PHP_IM]  = { &CPU::AddressImplied, &CPU::INS_PHP, 3 };
-	out->instructionTable[INS_PLP_IM]  = { &CPU::AddressImplied, &CPU::INS_PLP, 4 };
+	out->instructionTable[INS_TSX_IMP]  = { &CPU::AddressImplied, &CPU::INS_TSX, 2 };
+	out->instructionTable[INS_TXS_IMP]  = { &CPU::AddressImplied, &CPU::INS_TXS, 2 };
+	out->instructionTable[INS_PHA_IMP]  = { &CPU::AddressImplied, &CPU::INS_PHA, 3 };
+	out->instructionTable[INS_PLA_IMP]  = { &CPU::AddressImplied, &CPU::INS_PLA, 4 };
+	out->instructionTable[INS_PHP_IMP]  = { &CPU::AddressImplied, &CPU::INS_PHP, 3 };
+	out->instructionTable[INS_PLP_IMP]  = { &CPU::AddressImplied, &CPU::INS_PLP, 4 };
 
 	out->instructionTable[INS_JMP_ABS]  = { &CPU::AddressAbsolute,		   &CPU::INS_JMP, 3 };
 	out->instructionTable[INS_JMP_IND]  = { &CPU::AddressAbsoluteIndirect, &CPU::INS_JMP, 5 };
-
 	out->instructionTable[INS_JSR_ABS]  = { &CPU::AddressAbsolute, &CPU::INS_JSR, 6 };
-	out->instructionTable[INS_RTS_IM]   = { &CPU::AddressImplied,  &CPU::INS_RTS, 6 };
+	out->instructionTable[INS_RTS_IMP]   = { &CPU::AddressImplied,  &CPU::INS_RTS, 6 };
 
 	out->instructionTable[INS_AND_IM]   = { &CPU::AddressImmediate, &CPU::INS_AND, 3 };
 	out->instructionTable[INS_AND_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_AND, 3 };
@@ -91,15 +89,43 @@ CPU* CPU::Initialize(Memory* memory)
 	out->instructionTable[INS_EOR_INDX] = { &CPU::AddressIndirectX, &CPU::INS_EOR, 6 };
 	out->instructionTable[INS_EOR_INDY] = { &CPU::AddressIndirectY, &CPU::INS_EOR, 5 };
 
-	out->instructionTable[INS_BNE_REL]  = { &CPU::AddressRelative, &CPU::INS_BNE, 2 };
+	out->instructionTable[INS_BIT_ZP]  = { &CPU::AddressZeroPage,  &CPU::INS_BIT, 3 };
+	out->instructionTable[INS_BIT_ABS] = { &CPU::AddressAbsolute,  &CPU::INS_BIT, 4 };
 
-	out->instructionTable[INS_CLC_IM] = { &CPU::AddressImplied, &CPU::INS_CLC, 2 };
-	out->instructionTable[INS_SEC_IM] = { &CPU::AddressImplied, &CPU::INS_SEC, 2 };
-	out->instructionTable[INS_CLD_IM] = { &CPU::AddressImplied, &CPU::INS_CLD, 2 };
-	out->instructionTable[INS_SED_IM] = { &CPU::AddressImplied, &CPU::INS_SED, 2 };
-	out->instructionTable[INS_CLI_IM] = { &CPU::AddressImplied, &CPU::INS_CLI, 2 };
-	out->instructionTable[INS_SEI_IM] = { &CPU::AddressImplied, &CPU::INS_SEI, 2 };
-	out->instructionTable[INS_CLV_IM] = { &CPU::AddressImplied, &CPU::INS_CLV, 2 };
+	out->instructionTable[INS_TAX_IMP] = { &CPU::AddressImplied,  &CPU::INS_TAX, 2 };
+	out->instructionTable[INS_TAY_IMP] = { &CPU::AddressImplied,  &CPU::INS_TAY, 2 };
+	out->instructionTable[INS_TXA_IMP] = { &CPU::AddressImplied,  &CPU::INS_TXA, 2 };
+	out->instructionTable[INS_TYA_IMP] = { &CPU::AddressImplied,  &CPU::INS_TYA, 2 };
+
+	out->instructionTable[INS_INX_IMP]  = { &CPU::AddressImplied,   &CPU::INS_INX, 2 };
+	out->instructionTable[INS_INY_IMP]  = { &CPU::AddressImplied,   &CPU::INS_INY, 2 };
+	out->instructionTable[INS_INC_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_INC, 5 };
+	out->instructionTable[INS_INC_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_INC, 6 };
+	out->instructionTable[INS_INC_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_INC, 6 };
+	out->instructionTable[INS_INC_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_INC, 7 };
+	out->instructionTable[INS_DEX_IMP]  = { &CPU::AddressImplied,   &CPU::INS_DEX, 2 };
+	out->instructionTable[INS_DEY_IMP]  = { &CPU::AddressImplied,   &CPU::INS_DEY, 2 };
+	out->instructionTable[INS_DEC_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_DEC, 5 };
+	out->instructionTable[INS_DEC_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_DEC, 6 };
+	out->instructionTable[INS_DEC_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_DEC, 6 };
+	out->instructionTable[INS_DEC_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_DEC, 7 };
+
+	out->instructionTable[INS_BEQ_REL]  = { &CPU::AddressRelative, &CPU::INS_BEQ, 2 };
+	out->instructionTable[INS_BNE_REL]  = { &CPU::AddressRelative, &CPU::INS_BNE, 2 };
+	out->instructionTable[INS_BCS_REL]  = { &CPU::AddressRelative, &CPU::INS_BCS, 2 };
+	out->instructionTable[INS_BCC_REL]  = { &CPU::AddressRelative, &CPU::INS_BCC, 2 };
+	out->instructionTable[INS_BMI_REL]  = { &CPU::AddressRelative, &CPU::INS_BMI, 2 };
+	out->instructionTable[INS_BPL_REL]  = { &CPU::AddressRelative, &CPU::INS_BPL, 2 };
+	out->instructionTable[INS_BVC_REL]  = { &CPU::AddressRelative, &CPU::INS_BVC, 2 };
+	out->instructionTable[INS_BVS_REL]  = { &CPU::AddressRelative, &CPU::INS_BVS, 2 };
+
+	out->instructionTable[INS_CLC_IMP] = { &CPU::AddressImplied, &CPU::INS_CLC, 2 };
+	out->instructionTable[INS_SEC_IMP] = { &CPU::AddressImplied, &CPU::INS_SEC, 2 };
+	out->instructionTable[INS_CLD_IMP] = { &CPU::AddressImplied, &CPU::INS_CLD, 2 };
+	out->instructionTable[INS_SED_IMP] = { &CPU::AddressImplied, &CPU::INS_SED, 2 };
+	out->instructionTable[INS_CLI_IMP] = { &CPU::AddressImplied, &CPU::INS_CLI, 2 };
+	out->instructionTable[INS_SEI_IMP] = { &CPU::AddressImplied, &CPU::INS_SEI, 2 };
+	out->instructionTable[INS_CLV_IMP] = { &CPU::AddressImplied, &CPU::INS_CLV, 2 };
 
 	out->instructionTable[INS_ADC_IM]   = { &CPU::AddressImmediate, &CPU::INS_ADC, 2 };
 	out->instructionTable[INS_ADC_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ADC, 3 };
@@ -110,6 +136,15 @@ CPU* CPU::Initialize(Memory* memory)
 	out->instructionTable[INS_ADC_INDX] = { &CPU::AddressIndirectX, &CPU::INS_ADC, 6 };
 	out->instructionTable[INS_ADC_INDY] = { &CPU::AddressIndirectY, &CPU::INS_ADC, 5 };
 
+	out->instructionTable[INS_SBC_IM]   = { &CPU::AddressImmediate, &CPU::INS_SBC, 2 };
+	out->instructionTable[INS_SBC_ABS]  = { &CPU::AddressZeroPage,  &CPU::INS_SBC, 3 };
+	out->instructionTable[INS_SBC_ZP]   = { &CPU::AddressZeroPageX, &CPU::INS_SBC, 4 };
+	out->instructionTable[INS_SBC_ZPX]  = { &CPU::AddressAbsolute,  &CPU::INS_SBC, 4 };
+	out->instructionTable[INS_SBC_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_SBC, 4 };
+	out->instructionTable[INS_SBC_ABSY] = { &CPU::AddressAbsoluteY, &CPU::INS_SBC, 4 };
+	out->instructionTable[INS_SBC_INDX] = { &CPU::AddressIndirectX, &CPU::INS_SBC, 6 };
+	out->instructionTable[INS_SBC_INDY] = { &CPU::AddressIndirectY, &CPU::INS_SBC, 5 };
+
 	out->instructionTable[INS_CMP_IM]   = { &CPU::AddressImmediate, &CPU::INS_CMP, 2 };
 	out->instructionTable[INS_CMP_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_CMP, 3 };
 	out->instructionTable[INS_CMP_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_CMP, 4 };
@@ -119,12 +154,44 @@ CPU* CPU::Initialize(Memory* memory)
 	out->instructionTable[INS_CMP_INDX] = { &CPU::AddressIndirectX, &CPU::INS_CMP, 6 };
 	out->instructionTable[INS_CMP_INDY] = { &CPU::AddressIndirectY, &CPU::INS_CMP, 5 };
 
+	out->instructionTable[INS_CPX_IM]  = { &CPU::AddressImmediate, &CPU::INS_CPX, 2 };
+	out->instructionTable[INS_CPX_ZP]  = { &CPU::AddressZeroPage,  &CPU::INS_CPX, 3 };
+	out->instructionTable[INS_CPX_ABS] = { &CPU::AddressAbsolute,  &CPU::INS_CPX, 4 };
+
+	out->instructionTable[INS_CPY_IM]  = { &CPU::AddressImmediate, &CPU::INS_CPY, 2 };
+	out->instructionTable[INS_CPY_ZP]  = { &CPU::AddressZeroPage,  &CPU::INS_CPY, 3 };
+	out->instructionTable[INS_CPY_ABS] = { &CPU::AddressAbsolute,  &CPU::INS_CPY, 4 };
+
+	out->instructionTable[INS_ASL_A]    = { &CPU::AddressImplied,   &CPU::INS_ASL_ACC, 2 };
+	out->instructionTable[INS_ASL_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ASL, 5 };
+	out->instructionTable[INS_ASL_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_ASL, 6 };
+	out->instructionTable[INS_ASL_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_ASL, 6 };
+	out->instructionTable[INS_ASL_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_ASL, 7 };
+
+	out->instructionTable[INS_LSR_A]    = { &CPU::AddressImplied,   &CPU::INS_LSR_ACC, 2 };
+	out->instructionTable[INS_LSR_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_LSR, 5 };
+	out->instructionTable[INS_LSR_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_LSR, 6 };
+	out->instructionTable[INS_LSR_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_LSR, 6 };
+	out->instructionTable[INS_LSR_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_LSR, 7 };
+
+	out->instructionTable[INS_ROL_A]    = { &CPU::AddressImplied,   &CPU::INS_ROL_ACC, 2 };
+	out->instructionTable[INS_ROL_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ROL, 5 };
+	out->instructionTable[INS_ROL_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_ROL, 6 };
+	out->instructionTable[INS_ROL_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_ROL, 6 };
+	out->instructionTable[INS_ROL_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_ROL, 7 };
+
+	out->instructionTable[INS_ROR_A]    = { &CPU::AddressImplied,   &CPU::INS_ROR_ACC, 2 };
+	out->instructionTable[INS_ROR_ZP]   = { &CPU::AddressZeroPage,  &CPU::INS_ROR, 5 };
+	out->instructionTable[INS_ROR_ZPX]  = { &CPU::AddressZeroPageX, &CPU::INS_ROR, 6 };
+	out->instructionTable[INS_ROR_ABS]  = { &CPU::AddressAbsolute,  &CPU::INS_ROR, 6 };
+	out->instructionTable[INS_ROR_ABSX] = { &CPU::AddressAbsoluteX, &CPU::INS_ROR, 7 };
+
 	return out;
 }
 
 void CPU::Reset()
 {
-	PC = 0x0000;
+	PC = 0x8000;
 	SP = 0x0100;
 	statusFlags.C = statusFlags.Z = statusFlags.I = statusFlags.D = statusFlags.B = statusFlags.V = statusFlags.N = 0;
 	A = X = Y = 0;
@@ -525,25 +592,198 @@ byte CPU::INS_EOR(word addr)
 	return 1;
 }
 
-byte CPU::INS_CMP(word addr)
+byte CPU::INS_BIT(word addr)
+{
+	byte m = ReadByte(addr);
+	byte res = m & A;
+
+	SetStatusFlag(StatusFlag::ZERO, (res == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(res));
+
+	return 1;
+}
+
+byte CPU::INS_TAX(word addr)
+{
+	X = A;
+
+	SetStatusFlag(StatusFlag::ZERO, (X == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(X));
+
+	return 1;
+}
+
+byte CPU::INS_TAY(word addr)
+{
+	Y = A;
+
+	SetStatusFlag(StatusFlag::ZERO, (Y == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(Y));
+
+	return 1;
+}
+
+byte CPU::INS_TXA(word addr)
+{
+	A = X;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(A));
+
+	return 1;
+}
+
+byte CPU::INS_TYA(word addr)
+{
+	A = Y;
+
+	SetStatusFlag(StatusFlag::ZERO, (A == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(A));
+
+	return 1;
+}
+
+byte CPU::INS_INX(word addr)
+{
+	X = (X + 1) & 0xFF;
+
+	SetStatusFlag(StatusFlag::ZERO, (X == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(X));
+
+	return 1;
+}
+
+byte CPU::INS_INY(word addr)
+{
+	Y = (Y + 1) & 0xFF;
+
+	SetStatusFlag(StatusFlag::ZERO, (Y == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(Y));
+
+	return 1;
+}
+
+byte CPU::INS_INC(word addr)
 {
 	byte v = ReadByte(addr);
-	word tmp = A - v;
+	v = (v + 1) & 0xFF;
 
-	SetStatusFlag(StatusFlag::CARRY, !(A < v));
-	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
-	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+	WriteByte(addr, v);
+
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+
+	return 1;
+}
+
+byte CPU::INS_DEX(word addr)
+{
+	X = (X - 1) & 0xFF;
+
+	SetStatusFlag(StatusFlag::ZERO, (X == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(X));
+
+	return 1;
+}
+
+byte CPU::INS_DEY(word addr)
+{
+	Y = (Y - 1) & 0xFF;
+
+	SetStatusFlag(StatusFlag::ZERO, (Y == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(Y));
+
+	return 1;
+}
+
+byte CPU::INS_DEC(word addr)
+{
+	byte v = ReadByte(addr);
+	v = (v - 1) & 0xFF;
+
+	WriteByte(addr, v);
+
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+
+	return 1;
+}
+
+byte CPU::INS_BEQ(word addr)
+{
+	if (GetStatusFlag(StatusFlag::ZERO))
+	{
+		PC = addr;
+	}
 
 	return 1;
 }
 
 byte CPU::INS_BNE(word addr)
 {
-	if (GetStatusFlag(StatusFlag::ZERO))
+	if (!GetStatusFlag(StatusFlag::ZERO))
 	{
 		PC = addr;
 	}
 	
+	return 1;
+}
+
+byte CPU::INS_BCS(word addr)
+{
+	if (GetStatusFlag(StatusFlag::CARRY))
+	{
+		PC = addr;
+	}
+
+	return 1;
+}
+
+byte CPU::INS_BCC(word addr)
+{
+	if (!GetStatusFlag(StatusFlag::CARRY))
+	{
+		PC = addr;
+	}
+
+	return 1;
+}
+
+byte CPU::INS_BMI(word addr)
+{
+	if (GetStatusFlag(StatusFlag::NEGATIVE))
+	{
+		PC = addr;
+	}
+
+	return 1;
+}
+
+byte CPU::INS_BPL(word addr)
+{
+	if (!GetStatusFlag(StatusFlag::NEGATIVE))
+	{
+		PC = addr;
+	}
+
+	return 1;
+}
+
+byte CPU::INS_BVC(word addr)
+{
+	if (!GetStatusFlag(StatusFlag::INT_OVERFLOW))
+	{
+		PC = addr;
+	}
+	return 1;
+}
+
+byte CPU::INS_BVS(word addr)
+{
+	if (GetStatusFlag(StatusFlag::INT_OVERFLOW))
+	{
+		PC = addr;
+	}
 	return 1;
 }
 
@@ -624,6 +864,218 @@ byte CPU::INS_ADC(word addr)
 	SetStatusFlag(StatusFlag::ZERO, (A == 0));
 
 	return 1;
+}
+
+byte CPU::INS_SBC(word addr)
+{
+	uint8_t v = ReadByte(addr);
+	word tmp = A - v - (~GetStatusFlag(StatusFlag::CARRY));
+
+	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+	SetStatusFlag(StatusFlag::INT_OVERFLOW, ((A ^ tmp) & 0x80) && ((A ^ v) & 0x80));
+
+	if (GetStatusFlag(StatusFlag::DECIMAL))
+	{
+		if (((A & 0x0F) - (~GetStatusFlag(StatusFlag::CARRY)) < (v & 0x0F))) tmp -= 6;
+		if (tmp > 0x99)
+		{
+			tmp -= 0x60;
+		}
+	}
+
+	SetStatusFlag(StatusFlag::CARRY, tmp < 0xFF);
+
+	A = (tmp & 0xFF);
+
+	return 1;
+}
+
+byte CPU::INS_CMP(word addr)
+{
+	byte v = ReadByte(addr);
+	word tmp = A - v;
+
+	SetStatusFlag(StatusFlag::CARRY, !(A < v));
+	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+
+	return 1;
+}
+
+byte CPU::INS_CPX(word addr)
+{
+	byte v = ReadByte(addr);
+	word tmp = X - v;
+
+	SetStatusFlag(StatusFlag::CARRY, !(X < v));
+	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+
+	return 1;
+}
+
+byte CPU::INS_CPY(word addr)
+{
+	byte v = ReadByte(addr);
+	word tmp = Y - v;
+
+	SetStatusFlag(StatusFlag::CARRY, !(Y < v));
+	SetStatusFlag(StatusFlag::ZERO, (tmp == 0));
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(tmp));
+
+	return 1;
+}
+
+byte CPU::INS_ASL(word addr)
+{
+	byte v = ReadByte(addr);
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x80));
+
+	v <<= 1;
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	WriteByte(addr, v);
+
+	return 1;
+}
+
+byte CPU::INS_ASL_ACC(word addr)
+{
+	byte v = A;
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x80));
+
+	v <<= 1;
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	A = v;
+
+	return 1;
+}
+
+byte CPU::INS_LSR(word addr)
+{
+	byte v = ReadByte(addr);
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x80));
+
+	v >>= 1;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	WriteByte(addr, v);
+
+	return 1;
+}
+
+byte CPU::INS_LSR_ACC(word addr)
+{
+	byte v = A;
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x80));
+
+	v >>= 1;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	A = v;
+
+	return 1;
+}
+
+byte CPU::INS_ROL(word addr)
+{
+	word v = ReadByte(addr);
+
+	v <<= 1;
+
+	if (GetStatusFlag(StatusFlag::CARRY)) v |= 0x01;
+	SetStatusFlag(StatusFlag::CARRY, (v > 0xFF));
+
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	WriteByte(addr, v);
+	return 1;
+}
+
+byte CPU::INS_ROL_ACC(word addr)
+{
+	word v = A;
+
+	v <<= 1;
+
+	if (GetStatusFlag(StatusFlag::CARRY)) v |= 0x01;
+	SetStatusFlag(StatusFlag::CARRY, (v > 0xFF));
+
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	A = v;
+
+	return 1;
+}
+
+byte CPU::INS_ROR(word addr)
+{
+	uint16_t v = ReadByte(addr);
+
+	if (GetStatusFlag(StatusFlag::CARRY)) v |= 0x100;
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x01));
+
+	v >>= 1;
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+
+	WriteByte(addr, v);
+
+	return 1;
+}
+
+byte CPU::INS_ROR_ACC(word addr)
+{
+	uint16_t v = A;
+
+	if (GetStatusFlag(StatusFlag::CARRY)) v |= 0x100;
+	SetStatusFlag(StatusFlag::CARRY, (v & 0x01));
+
+	v >>= 1;
+	v &= 0xFF;
+
+	SetStatusFlag(StatusFlag::NEGATIVE, IS_NEGATIVE(v));
+	SetStatusFlag(StatusFlag::ZERO, (v == 0));
+
+	A = v;
+
+	return 1;
+}
+
+byte CPU::INS_NOP(word addr)
+{
+	return 1;//do nothing!
+}
+
+byte CPU::INS_BRK(word addr)
+{
+	return 0;
+}
+
+byte CPU::INS_RTI(word addr)
+{
+	return 0;
 }
 
 const byte CPU::GetStatusFlag(const StatusFlag f) const

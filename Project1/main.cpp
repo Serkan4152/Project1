@@ -75,11 +75,11 @@ int main()
 
 	std::ifstream stream;
 	//stream.open("lda-sta-loop-example.bin", std::ios_base::binary);
-	stream.open("bins/loop+1.bin", std::ios_base::binary);
+	stream.open("bins/test.bin", std::ios_base::binary);
 	if (!stream.bad()) {
 		std::vector<byte> data((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
 
-		memory->WriteBytes(0x0000, data.data(), data.size()-1);
+		memory->WriteBytes(0x8000, data.data(), data.size()-1);
 		//printf("Loading file %s", stream.)
 	}
 

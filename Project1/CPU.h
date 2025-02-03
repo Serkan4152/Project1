@@ -70,9 +70,28 @@ public:
 	byte INS_ORA(word addr);
 	byte INS_EOR(word addr);
 
-	byte INS_CMP(word addr);
-	byte INS_BNE(word addr);
+	byte INS_BIT(word addr);
 
+	byte INS_TAX(word addr);
+	byte INS_TAY(word addr);
+	byte INS_TXA(word addr);
+	byte INS_TYA(word addr);
+
+	byte INS_INX(word addr);
+	byte INS_INY(word addr);
+	byte INS_INC(word addr);
+	byte INS_DEX(word addr);
+	byte INS_DEY(word addr);
+	byte INS_DEC(word addr);
+
+	byte INS_BEQ(word addr);
+	byte INS_BNE(word addr);
+	byte INS_BCS(word addr);
+	byte INS_BCC(word addr);
+	byte INS_BMI(word addr);
+	byte INS_BPL(word addr);
+	byte INS_BVC(word addr);
+	byte INS_BVS(word addr);
 
 	byte INS_CLC(word addr);
 	byte INS_SEC(word addr);
@@ -83,6 +102,27 @@ public:
 	byte INS_CLV(word addr);
 
 	byte INS_ADC(word addr);
+	byte INS_SBC(word addr);
+
+	byte INS_CMP(word addr);
+	byte INS_CPX(word addr);
+	byte INS_CPY(word addr);
+
+	byte INS_ASL(word addr);
+	byte INS_ASL_ACC(word addr);
+
+	byte INS_LSR(word addr);
+	byte INS_LSR_ACC(word addr);
+
+	byte INS_ROL(word addr);
+	byte INS_ROL_ACC(word addr);
+
+	byte INS_ROR(word addr);
+	byte INS_ROR_ACC(word addr);
+
+	byte INS_NOP(word addr);
+	byte INS_BRK(word addr);
+	byte INS_RTI(word addr);
 
 	enum class StatusFlag : byte {
 		CARRY = (1 << 0),		// Carry Bit

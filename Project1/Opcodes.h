@@ -2,7 +2,7 @@
 #include "Utils.h"
 
 static constexpr byte
-//LDA
+//LDA(done)
 INS_LDA_IM = 0xA9,
 INS_LDA_ZP = 0xA5,
 INS_LDA_ZPX = 0xB5,
@@ -11,19 +11,19 @@ INS_LDA_ABSX = 0xBD,
 INS_LDA_ABSY = 0xB9,
 INS_LDA_INDX = 0xA1,
 INS_LDA_INDY = 0xB1,
-//LDX
+//LDX(done)
 INS_LDX_IM = 0xA2,
 INS_LDX_ZP = 0xA6,
 INS_LDX_ZPY = 0xB6,
 INS_LDX_ABS = 0xAE,
 INS_LDX_ABSY = 0xBE,
-//LDY
+//LDY(done)
 INS_LDY_IM = 0xA0,
 INS_LDY_ZP = 0xA4,
 INS_LDY_ZPX = 0xB4,
 INS_LDY_ABS = 0xAC,
 INS_LDY_ABSX = 0xBC,
-//STA
+//STA(done)
 INS_STA_ZP = 0x85,
 INS_STA_ZPX = 0x95,
 INS_STA_ABS = 0x8D,
@@ -31,30 +31,30 @@ INS_STA_ABSX = 0x9D,
 INS_STA_ABSY = 0x99,
 INS_STA_INDX = 0x81,
 INS_STA_INDY = 0x91,
-//STX
+//STX(done)
 INS_STX_ZP = 0x86,
 INS_STX_ZPY = 0x96,
 INS_STX_ABS = 0x8E,
-//STY
+//STY(done)
 INS_STY_ZP = 0x84,
 INS_STY_ZPX = 0x94,
 INS_STY_ABS = 0x8C,
-
-INS_TSX_IM = 0xBA,
-INS_TXS_IM = 0x9A,
-INS_PHA_IM = 0x48,
-INS_PLA_IM = 0x68,
-INS_PHP_IM = 0x08,
-INS_PLP_IM = 0x28,
-
+//(done, PHP & PLP not)
+INS_TSX_IMP = 0xBA,
+INS_TXS_IMP = 0x9A,
+INS_PHA_IMP = 0x48,
+INS_PLA_IMP = 0x68,
+INS_PHP_IMP = 0x08,
+INS_PLP_IMP = 0x28,
+//(done)
 INS_JMP_ABS = 0x4C,
 INS_JMP_IND = 0x6C,
 INS_JSR_ABS = 0x20,
-INS_RTS_IM = 0x60,
+INS_RTS_IMP = 0x60,
 
 //Logical Ops
 
-//AND
+//AND(done)
 INS_AND_IM = 0x29,
 INS_AND_ZP = 0x25,
 INS_AND_ZPX = 0x35,
@@ -64,7 +64,7 @@ INS_AND_ABSY = 0x39,
 INS_AND_INDX = 0x21,
 INS_AND_INDY = 0x31,
 
-//OR
+//OR(done)
 INS_ORA_IM = 0x09,
 INS_ORA_ZP = 0x05,
 INS_ORA_ZPX = 0x15,
@@ -74,7 +74,7 @@ INS_ORA_ABSY = 0x19,
 INS_ORA_INDX = 0x01,
 INS_ORA_INDY = 0x11,
 
-//EOR
+//EOR(done)
 INS_EOR_IM = 0x49,
 INS_EOR_ZP = 0x45,
 INS_EOR_ZPX = 0x55,
@@ -84,50 +84,51 @@ INS_EOR_ABSY = 0x59,
 INS_EOR_INDX = 0x41,
 INS_EOR_INDY = 0x51,
 
-//BIT
+//BIT(done)
 INS_BIT_ZP = 0x24,
 INS_BIT_ABS = 0x2C,
 
-//Transfer Registers
-INS_TAX = 0xAA,
-INS_TAY = 0xA8,
-INS_TXA = 0x8A,
-INS_TYA = 0x98,
+//Transfer Registers(done)
+INS_TAX_IMP = 0xAA,
+INS_TAY_IMP = 0xA8,
+INS_TXA_IMP = 0x8A,
+INS_TYA_IMP = 0x98,
 
-//Increments, Decrements
-INS_INX = 0xE8,
-INS_INY = 0xC8,
-INS_DEY = 0x88,
-INS_DEX = 0xCA,
-INS_DEC_ZP = 0xC6,
-INS_DEC_ZPX = 0xD6,
-INS_DEC_ABS = 0xCE,
-INS_DEC_ABSX = 0xDE,
+//Increments, Decrements(done)
+INS_INX_IMP = 0xE8,
+INS_INY_IMP = 0xC8,
 INS_INC_ZP = 0xE6,
 INS_INC_ZPX = 0xF6,
 INS_INC_ABS = 0xEE,
 INS_INC_ABSX = 0xFE,
+INS_DEX_IMP = 0xCA,
+INS_DEY_IMP = 0x88,
+INS_DEC_ZP = 0xC6,
+INS_DEC_ZPX = 0xD6,
+INS_DEC_ABS = 0xCE,
+INS_DEC_ABSX = 0xDE,
 
-//branches
-INS_BEQ = 0xF0,
+
+//branches(done)
+INS_BEQ_REL = 0xF0,
 INS_BNE_REL = 0xD0,
-INS_BCS = 0xB0,
-INS_BCC = 0x90,
-INS_BMI = 0x30,
-INS_BPL = 0x10,
-INS_BVC = 0x50,
-INS_BVS = 0x70,
+INS_BCS_REL = 0xB0,
+INS_BCC_REL = 0x90,
+INS_BMI_REL = 0x30,
+INS_BPL_REL = 0x10,
+INS_BVC_REL = 0x50,
+INS_BVS_REL = 0x70,
 
-//status flag changes
-INS_CLC_IM = 0x18,
-INS_SEC_IM = 0x38,
-INS_CLD_IM = 0xD8,
-INS_SED_IM = 0xF8,
-INS_CLI_IM = 0x58,
-INS_SEI_IM = 0x78,
-INS_CLV_IM = 0xB8,
+//status flag changes(done)
+INS_CLC_IMP = 0x18,
+INS_SEC_IMP = 0x38,
+INS_CLD_IMP = 0xD8,
+INS_SED_IMP = 0xF8,
+INS_CLI_IMP = 0x58,
+INS_SEI_IMP = 0x78,
+INS_CLV_IMP = 0xB8,
 
-//Arithmetic
+//Arithmetic(done)
 INS_ADC_IM = 0x69,
 INS_ADC_ZP = 0x65,
 INS_ADC_ZPX = 0x75,
@@ -137,7 +138,7 @@ INS_ADC_ABSY = 0x79,
 INS_ADC_INDX = 0x61,
 INS_ADC_INDY = 0x71,
 
-INS_SBC = 0xE9,
+INS_SBC_IM = 0xE9,
 INS_SBC_ABS = 0xED,
 INS_SBC_ZP = 0xE5,
 INS_SBC_ZPX = 0xF5,
@@ -146,7 +147,7 @@ INS_SBC_ABSY = 0xF9,
 INS_SBC_INDX = 0xE1,
 INS_SBC_INDY = 0xF1,
 
-// Register Comparison
+// Register Comparison(done)
 INS_CMP_IM = 0xC9,
 INS_CMP_ZP = 0xC5,
 INS_CMP_ZPX = 0xD5,
@@ -156,33 +157,33 @@ INS_CMP_ABSY = 0xD9,
 INS_CMP_INDX = 0xC1,
 INS_CMP_INDY = 0xD1,
 
-INS_CPX = 0xE0,
-INS_CPY = 0xC0,
+INS_CPX_IM = 0xE0,
 INS_CPX_ZP = 0xE4,
-INS_CPY_ZP = 0xC4,
 INS_CPX_ABS = 0xEC,
+INS_CPY_IM = 0xC0,
+INS_CPY_ZP = 0xC4,
 INS_CPY_ABS = 0xCC,
 
 // shifts
-INS_ASL = 0x0A,
+INS_ASL_A = 0x0A,
 INS_ASL_ZP = 0x06,
 INS_ASL_ZPX = 0x16,
 INS_ASL_ABS = 0x0E,
 INS_ASL_ABSX = 0x1E,
 
-INS_LSR = 0x4A,
+INS_LSR_A = 0x4A,
 INS_LSR_ZP = 0x46,
 INS_LSR_ZPX = 0x56,
 INS_LSR_ABS = 0x4E,
 INS_LSR_ABSX = 0x5E,
 
-INS_ROL = 0x2A,
+INS_ROL_A = 0x2A,
 INS_ROL_ZP = 0x26,
 INS_ROL_ZPX = 0x36,
 INS_ROL_ABS = 0x2E,
 INS_ROL_ABSX = 0x3E,
 
-INS_ROR = 0x6A,
+INS_ROR_A = 0x6A,
 INS_ROR_ZP = 0x66,
 INS_ROR_ZPX = 0x76,
 INS_ROR_ABS = 0x6E,
